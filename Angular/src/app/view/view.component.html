@@ -1,0 +1,107 @@
+<div *ngIf="showModal" class="layer"></div>
+
+<div  *ngIf="display">
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Firstname</th>
+        <th scope="col">Lastname</th>
+        <th scope="col">Date of Birth</th>
+        <th scope="col">Email</th>
+        <th scope="col" colspan="2" style="text-align: center;">
+            <input type="text" [(ngModel)]="search" autocomplete="off" placeholder="Search by Name">
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of Users.data | filter: search;let i= index;">
+        <td>{{i+1}}</td>
+        <td>{{user.firstname}}</td>
+        <td>{{user.lastname}}</td>
+        <td>{{user.dob}}</td>
+        <td>{{user.email}}</td>
+        
+        <td>
+            <img  (click)="loadData(user)" src="../../assets/edit.png" height="15px" width="15px">
+        </td>
+        <td>
+            <img (click)="delete(user._id)" src="../../assets/delete.png" height="15px" width="15px">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<h3 *ngIf="!display" class="text-danger" style="text-align: center;margin-top: 20px;">No results found</h3>
+
+<!-- Modal -->
+  <div class="modal fade" [ngClass]="{'show':showModal}" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Details</h5>
+              <button type="button" (click)="close()" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form [formGroup]="updateForm">
+                  <table>
+                      <tr>
+                          <td>
+                              <!-- Firstname form field -->
+                                <div class="form-group">
+                                    <label>Firstname</label>
+                                    <input formControlName="firstname" type="text" class="form-control">
+                                </div>
+                          </td>
+                          <td>
+                                <!-- Firstname form field -->
+                                  <div class="form-group">
+                                      <label>Lastname</label>
+                                      <input formControlName="lastname" type="text" class="form-control">
+                                  </div>
+                            </td>
+                      </tr>
+                      <tr>
+                          <td colspan="2">
+                                        <!-- Firstname form field -->
+                                          <div class="form-group">
+                                              <label>Email</label>
+                                              <input formControlName="email" type="email" class="form-control">
+                                          </div>
+                                   
+                          </td>
+                      </tr>
+                      <tr>
+                          <td colspan="2">
+                                        <!-- Firstname form field -->
+                                          <div class="form-group">
+                                              <label>Date of Birth</label>
+                                              <input formControlName="dob" type="date" class="form-control">
+                                          </div>
+                                
+                          </td>
+                      </tr>
+                      <tr>
+                            <td colspan="2">
+                                  
+                                          <!-- Firstname form field -->
+                                            <div class="form-group">
+                                                <label>Description</label>
+                                                <textarea formControlName="bio" class="form-control"></textarea>
+                                            </div>
+                                    
+                            </td>
+                        </tr>
+                  </table>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" (click)="close()" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" (click)="update(updateForm.value)">Update</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
